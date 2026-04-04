@@ -3,6 +3,7 @@
 import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
   modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@nuxtjs/i18n', '@nuxt/eslint', '@nuxtjs/sitemap', '@nuxtjs/robots'],
+  ssr: false,
   srcDir: 'app',
   vite: {
     plugins: [tailwindcss()],
