@@ -3,7 +3,6 @@
 import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
   modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@nuxtjs/i18n', '@nuxt/eslint', '@nuxtjs/sitemap', '@nuxtjs/robots'],
-  ssr: false,
   srcDir: 'app',
   vite: {
     plugins: [tailwindcss()],
@@ -12,6 +11,7 @@ export default defineNuxtConfig({
 
   i18n: {
     //    vueI18n: './i18n/i18n.ts',
+    defaultLocale: 'en-US',
     detectBrowserLanguage: {
       useCookie: true,
       alwaysRedirect: false,
@@ -19,7 +19,7 @@ export default defineNuxtConfig({
       cookieKey: 'i18n_redirected',
       redirectOn: 'root', // recommended
     },
-    strategy: 'no_prefix',
+    strategy: 'prefix_except_default',
     locales: [
       {
         code: 'en-US',
@@ -83,5 +83,9 @@ export default defineNuxtConfig({
       gtag: '',
       matomoEndpoint: '',
     },
+  },
+
+  site: {
+    url: 'https://caesium.app',
   },
 });

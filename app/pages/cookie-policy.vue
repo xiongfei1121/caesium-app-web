@@ -89,7 +89,7 @@
         </tr>
         <tr>
           <td>Service:</td>
-          <td>Advertiser's website domain <a href="None">View Service Privacy Policy</a></td>
+          <td>Advertiser's website domain</td>
         </tr>
         <tr>
           <td>Country:</td>

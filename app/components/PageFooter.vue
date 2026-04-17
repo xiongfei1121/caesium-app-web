@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const { t } = useI18n();
+const localePath = useLocalePath();
 </script>
 
 <template>
   <footer class="mt-auto w-full bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-xs">
     <div class="w-full py-3 px-4 flex items-center justify-between">
       <div class="flex flex-col gap-1">
-        <NuxtLink target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{ name: 'cookie-policy' }">{{ t('compressor.cookie_policy') }}</NuxtLink>
-        <NuxtLink target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{ name: 'privacy-policy' }">{{ t('compressor.privacy_policy') }}</NuxtLink>
+        <NuxtLink target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="localePath('/cookie-policy')">{{ t('compressor.cookie_policy') }}</NuxtLink>
+        <NuxtLink target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="localePath('/privacy-policy')">{{ t('compressor.privacy_policy') }}</NuxtLink>
         <a data-cc="show-preferencesModal" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" href="#">{{ t('compressor.consent_preferences') }}</a>
       </div>
       <div class="flex flex-col gap-2 items-end">

@@ -5,6 +5,7 @@ import { APP_THEME } from '~/utils/utils';
 import { useCompressorStore } from '@/stores/compressor';
 
 const { locales, setLocale, t } = useI18n();
+const localePath = useLocalePath();
 
 const compressorStore = useCompressorStore();
 
@@ -36,7 +37,7 @@ function toggleTheme(theme: APP_THEME) {
       </div>
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-          <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1 transition-colors" :to="{ name: 'donate' }">
+          <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1 transition-colors" :to="localePath('/donate')">
             <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500 transition-colors" />
             {{ t('compressor.donate') }}
           </NuxtLink>
@@ -66,30 +67,35 @@ function toggleTheme(theme: APP_THEME) {
               </div>
             </div>
           </div>
-          <button
-            v-if="compressorStore.appTheme === APP_THEME.LIGHT"
-            type="button"
-            class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
-            @click="toggleTheme(APP_THEME.DARK)"
-          >
-            <Sun class="size-4" />
-          </button>
-          <button
-            v-if="compressorStore.appTheme === APP_THEME.DARK"
-            type="button"
-            class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
-            @click="toggleTheme(APP_THEME.SYSTEM)"
-          >
-            <Moon class="size-4" />
-          </button>
-          <button
-            v-if="compressorStore.appTheme === APP_THEME.SYSTEM"
-            type="button"
-            class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
-            @click="toggleTheme(APP_THEME.LIGHT)"
-          >
-            <SunMoon class="size-4" />
-          </button>
+          <ClientOnly>
+            <button
+              v-if="compressorStore.appTheme === APP_THEME.LIGHT"
+              type="button"
+              class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+              @click="toggleTheme(APP_THEME.DARK)"
+            >
+              <Sun class="size-4" />
+            </button>
+            <button
+              v-if="compressorStore.appTheme === APP_THEME.DARK"
+              type="button"
+              class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+              @click="toggleTheme(APP_THEME.SYSTEM)"
+            >
+              <Moon class="size-4" />
+            </button>
+            <button
+              v-if="compressorStore.appTheme === APP_THEME.SYSTEM"
+              type="button"
+              class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+              @click="toggleTheme(APP_THEME.LIGHT)"
+            >
+              <SunMoon class="size-4" />
+            </button>
+            <template #fallback>
+              <div class="size-4" />
+            </template>
+          </ClientOnly>
         </div>
       </div>
     </nav>
