@@ -70,6 +70,9 @@ export default defineNuxtConfig({
     experimental: {
       wasm: true,
     },
+    output: {
+      publicDir: '.output/public',
+    },
   },
 
   compatibilityDate: '2024-10-08',
