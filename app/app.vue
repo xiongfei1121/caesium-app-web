@@ -9,11 +9,11 @@ const matomoEndpoint = useRuntimeConfig().public.matomoEndpoint || '';
 const compressorStore = useCompressorStore();
 
 useHead({
-  title: 'Caesium Image Compressor - Online',
+  title: '🐻老熊图片压缩 Web',
   meta: [
     {
       name: 'description',
-      content: 'Caesium is a free, open source, online compression tool for photos and images (JPG, PNG), supporting batch, preview and many more. Caesium saves space and makes uploads faster.',
+      content: '🐻老熊图片压缩 - 免费的在线图片压缩工具，支持 JPG、PNG、WebP 格式，支持批量压缩和预览，让图片更小，上传更快。',
     },
   ],
   script: [
