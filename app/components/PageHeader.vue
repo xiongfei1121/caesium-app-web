@@ -20,7 +20,7 @@ function toggleTheme(theme: APP_THEME) {
       <div class="flex items-center justify-between">
         <a href="/" class="flex items-center gap-2">
           <img class="size-10" src="~/assets/images/logo.png" alt="logo" />
-          <h2 class="hidden sm:block text-gray-900 dark:text-gray-100 text-lg"><span class="font-medium">Caesium</span> Image Compressor</h2>
+          <h2 class="hidden sm:block text-gray-900 dark:text-gray-100 text-lg"><span class="font-medium">🐻</span> 老熊图片压缩 Web</h2>
         </a>
         <div class="sm:hidden">
           <button
