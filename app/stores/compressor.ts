@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, type Ref, ref } from 'vue';
-import { APP_THEME, type CImage, COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, type GeneralMessage, MAX_SIZE_UNIT, MESSAGE_LEVEL } from '@/utils/utils';
+import { APP_THEME, type CImage, COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL, RESIZE_MODE } from '@/utils/utils';
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import CompressionWorker from 'assets/workers/compression-worker?worker';
 import JSZip from 'jszip';
@@ -26,6 +26,10 @@ export const useCompressorStore = defineStore(
     const keepMetadata: Ref<boolean> = ref(true);
     const lossless: Ref<boolean> = ref(false);
     const compressionMode: Ref<COMPRESSION_MODE> = ref(COMPRESSION_MODE.QUALITY);
+    const resizeMode: Ref<RESIZE_MODE> = ref(RESIZE_MODE.NONE);
+    const resizeWidth: Ref<number> = ref(0);
+    const resizeHeight: Ref<number> = ref(0);
+    const resizePercentage: Ref<number> = ref(100);
     const maxSizeValue: Ref<number> = ref(500);
     const maxSizeUnit: Ref<MAX_SIZE_UNIT> = ref(MAX_SIZE_UNIT.KILOBYTE);
     const groupId: Ref<string> = ref(uuidv4());
@@ -206,7 +210,18 @@ export const useCompressorStore = defineStore(
       const tasks = [];
       for (const cImage of files.values()) {
         cImage.status = FILE_STATUS.COMPRESSING;
-        tasks.push([cImage.file, lossless.value ? 0 : quality.value, keepMetadata.value, maxSize.value, compressionMode.value, cImage.id]);
+        tasks.push([
+          cImage.file,
+          lossless.value ? 0 : quality.value,
+          keepMetadata.value,
+          maxSize.value,
+          compressionMode.value,
+          cImage.id,
+          resizeMode.value,
+          resizeWidth.value,
+          resizeHeight.value,
+          resizePercentage.value,
+        ]);
       }
       Promise.all(tasks.map((task) => pool.runTask(task)))
         .then((results) => {
@@ -356,11 +371,15 @@ export const useCompressorStore = defineStore(
       appTheme,
       FILES_LIMIT,
       MAX_FILE_SIZE,
+      resizeMode,
+      resizeWidth,
+      resizeHeight,
+      resizePercentage,
     };
   },
   {
     persist: {
-      pick: ['compressionMode', 'keepMetadata', 'lossless', 'maxSizeValue', 'maxSizeUnit', 'quality', 'appTheme'],
+      pick: ['compressionMode', 'keepMetadata', 'lossless', 'maxSizeValue', 'maxSizeUnit', 'quality', 'appTheme', 'resizeMode', 'resizeWidth', 'resizeHeight', 'resizePercentage'],
     },
   },
 );

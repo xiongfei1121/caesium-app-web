@@ -33,7 +33,16 @@
     "back": "返回",
     "original": "原始",
     "compressed": "压缩",
-    "swap": "交换"
+    "swap": "交换",
+    "resize": "调整大小",
+    "resize_none": "不调整",
+    "resize_dimensions": "指定尺寸 (宽×高)",
+    "resize_percentage": "百分比",
+    "resize_short_edge": "短边",
+    "resize_long_edge": "长边",
+    "resize_fixed_width": "固定宽度",
+    "resize_fixed_height": "固定高度",
+    "percentage": "百分比"
   },
   "errors": {
     "file_invalid": "提供的文件无效。",

@@ -24,6 +24,16 @@ export enum COMPRESSION_MODE {
   SIZE,
 }
 
+export enum RESIZE_MODE {
+  NONE = 'none',
+  DIMENSIONS = 'dimensions',
+  PERCENTAGE = 'percentage',
+  SHORT_EDGE = 'short_edge',
+  LONG_EDGE = 'long_edge',
+  FIXED_WIDTH = 'fixed_width',
+  FIXED_HEIGHT = 'fixed_height',
+}
+
 export enum APP_THEME {
   LIGHT = 'light',
   DARK = 'dark',

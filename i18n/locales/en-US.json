@@ -33,7 +33,16 @@
     "back": "Back",
     "original": "Original",
     "compressed": "Compressed",
-    "swap": "Swap"
+    "swap": "Swap",
+    "resize": "Resize",
+    "resize_none": "No Resize",
+    "resize_dimensions": "Dimensions (WxH)",
+    "resize_percentage": "Percentage",
+    "resize_short_edge": "Short Edge",
+    "resize_long_edge": "Long Edge",
+    "resize_fixed_width": "Fixed Width",
+    "resize_fixed_height": "Fixed Height",
+    "percentage": "Percentage"
   },
   "errors": {
     "file_invalid": "Provided file is invalid.",

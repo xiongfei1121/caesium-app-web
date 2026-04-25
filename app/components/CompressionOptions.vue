@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { useCompressorStore } from '@/stores/compressor';
-import { CircleHelp } from 'lucide-vue-next';
-import { COMPRESSION_MODE } from '~/utils/utils';
+import { CircleHelp, ArrowUpDown, ArrowUpWideNarrow, ArrowDownWideNarrow } from 'lucide-vue-next';
+import { COMPRESSION_MODE, RESIZE_MODE } from '~/utils/utils';
 import prettyBytes from 'pretty-bytes';
 
 const { t } = useI18n();
 
 const compressorStore = useCompressorStore();
+
+function onResizeModeChange() {
+  // Reset values when changing mode
+  if (compressorStore.resizeMode === RESIZE_MODE.NONE) {
+    compressorStore.resizeWidth = 0;
+    compressorStore.resizeHeight = 0;
+    compressorStore.resizePercentage = 100;
+  }
+}
 </script>
 
 <template>
@@ -103,6 +112,73 @@ const compressorStore = useCompressorStore();
             ></span>
             <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:bg-gray-400 dark:peer-checked:bg-white"></span>
           </label>
+        </div>
+
+        <!-- Resize Section -->
+        <div class="border-t border-gray-300 dark:border-gray-700 pt-4 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-medium">{{ t('compressor.resize') || 'Resize' }}</span>
+            <select
+              v-model="compressorStore.resizeMode"
+              @change="onResizeModeChange"
+              class="py-2 px-3 pe-9 block border-2 border-gray-200 rounded-lg text-sm focus:border-purple-500 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-500 dark:focus:ring-purple-500 dark:focus:border-purple-500"
+            >
+              <option :value="RESIZE_MODE.NONE">{{ t('compressor.resize_none') || 'No Resize' }}</option>
+              <option :value="RESIZE_MODE.DIMENSIONS">{{ t('compressor.resize_dimensions') || 'Dimensions (WxH)' }}</option>
+              <option :value="RESIZE_MODE.PERCENTAGE">{{ t('compressor.resize_percentage') || 'Percentage' }}</option>
+              <option :value="RESIZE_MODE.SHORT_EDGE">{{ t('compressor.resize_short_edge') || 'Short Edge' }}</option>
+              <option :value="RESIZE_MODE.LONG_EDGE">{{ t('compressor.resize_long_edge') || 'Long Edge' }}</option>
+              <option :value="RESIZE_MODE.FIXED_WIDTH">{{ t('compressor.resize_fixed_width') || 'Fixed Width' }}</option>
+              <option :value="RESIZE_MODE.FIXED_HEIGHT">{{ t('compressor.resize_fixed_height') || 'Fixed Height' }}</option>
+            </select>
+          </div>
+
+          <!-- Dimensions Mode -->
+          <div v-if="compressorStore.resizeMode === RESIZE_MODE.DIMENSIONS" class="flex gap-2 items-center">
+            <input
+              v-model.number="compressorStore.resizeWidth"
+              type="number"
+              min="1"
+              placeholder="Width"
+              class="py-2 px-3 block w-full border-2 border-gray-200 rounded-lg text-sm focus:border-purple-500 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-700"
+            />
+            <span>×</span>
+            <input
+              v-model.number="compressorStore.resizeHeight"
+              type="number"
+              min="1"
+              placeholder="Height"
+              class="py-2 px-3 block w-full border-2 border-gray-200 rounded-lg text-sm focus:border-purple-500 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-700"
+            />
+            <span class="text-sm text-gray-500">px</span>
+          </div>
+
+          <!-- Percentage Mode -->
+          <div v-if="compressorStore.resizeMode === RESIZE_MODE.PERCENTAGE" class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm">{{ t('compressor.percentage') || 'Percentage' }}</span>
+              <span>{{ compressorStore.resizePercentage }}%</span>
+            </div>
+            <input
+              v-model.number="compressorStore.resizePercentage"
+              type="range"
+              min="1"
+              max="200"
+              class="w-full bg-transparent cursor-pointer appearance-none focus:outline-hidden [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:-mt-0.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(168,85,247,1)] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-150 [&::-webkit-slider-thumb]:ease-in-out dark:[&::-webkit-slider-thumb]:dark:bg-gray-800 [&::-moz-range-thumb]:w-2.5 [&::-moz-range-thumb]:h-2.5 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-purple-500 [&::-moz-range-thumb]:border-4 [&::-moz-range-thumb]:border-purple-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:transition-all [&::-moz-range-thumb]:duration-150 [&::-moz-range-thumb]:ease-in-out [&::-webkit-slider-runnable-track]:w-full [&::-webkit-slider-runnable-track]:h-2 [&::-webkit-slider-runnable-track]:bg-gray-200 [&::-webkit-slider-runnable-track]:rounded-full dark:[&::-webkit-slider-runnable-track]:bg-gray-700 [&::-moz-range-track]:w-full [&::-moz-range-track]:h-2 [&::-moz-range-track]:bg-gray-200 dark:[&::-moz-range-track]:bg-gray-700 [&::-moz-range-track]:rounded-full"
+            />
+          </div>
+
+          <!-- Short Edge / Long Edge / Fixed Width / Fixed Height -->
+          <div v-if="compressorStore.resizeMode === RESIZE_MODE.SHORT_EDGE || compressorStore.resizeMode === RESIZE_MODE.LONG_EDGE || compressorStore.resizeMode === RESIZE_MODE.FIXED_WIDTH || compressorStore.resizeMode === RESIZE_MODE.FIXED_HEIGHT" class="flex gap-2 items-center">
+            <input
+              v-model.number="compressorStore.resizeWidth"
+              type="number"
+              min="1"
+              :placeholder="compressorStore.resizeMode === RESIZE_MODE.FIXED_HEIGHT ? 'Auto' : (compressorStore.resizeMode === RESIZE_MODE.SHORT_EDGE || compressorStore.resizeMode === RESIZE_MODE.LONG_EDGE ? 'Edge (px)' : 'Width (px)')"
+              class="py-2 px-3 block w-full border-2 border-gray-200 rounded-lg text-sm focus:border-purple-500 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-700"
+            />
+            <span class="text-sm text-gray-500">px</span>
+          </div>
         </div>
       </div>
     </div>
