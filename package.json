@@ -6,7 +6,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate && cp -r dist .output/public",
+    "generate": "nuxt generate && mkdir -p .output/public && cp -r dist/. .output/public/",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
