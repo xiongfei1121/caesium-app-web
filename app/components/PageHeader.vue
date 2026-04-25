@@ -37,10 +37,7 @@ function toggleTheme(theme: APP_THEME) {
       </div>
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-          <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1 transition-colors" :to="localePath('/donate')">
-            <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500 transition-colors" />
-            {{ t('compressor.donate') }}
-          </NuxtLink>
+          
           <!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ t('compressor.about') }}</NuxtLink>-->
           <div class="hs-dropdown relative inline-flex">
             <button id="hs-dropdown-custom-trigger" type="button" class="hs-dropdown-toggle flex items-center w-full text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500">
